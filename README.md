@@ -1,4 +1,4 @@
-This script is for automating the process of cropping, resizing, adding author's information, compressing, and uploading an image.
+These scripts are for automating the process of cropping, resizing, adding author's information, compressing, and uploading an image.
 
 - The compressing service I use [tinypng](https://tinypng.com)
 - The storage for image I user [sm.ms](https://sm.ms/)

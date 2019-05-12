@@ -4,6 +4,8 @@ import tinify
 import requests
 import sys
 import os
+file_dir = os.path.dirname(__file__)
+sys.path.append(file_dir)
 import os.path
 import re
 import pyperclip
@@ -25,7 +27,7 @@ def img_process(img,size,x_text,y_text,font):
     cropped.thumbnail(size, Image.ANTIALIAS)
     img_addtext(cropped,name,x_text,y_text,font)
     cropped.save('resizeimage.jpg', "JPEG")
-    keyFile = open('api.txt', 'r')
+    keyFile = open(file_dir+'/api.txt', 'r')
     consumer_key = keyFile.readline().rstrip()
     tinify.key = consumer_key
     source = tinify.from_file("resizeimage.jpg")
@@ -57,11 +59,12 @@ def img_crop(original,size):
 
 def img_addtext(cropped,name,x_text,y_text,font):
     (x, y) = (x_text, y_text)
-    ste = (re.findall(r'.+(?=[a-z])', re.findall(r'.+(?<=[0-9])', name)[0])[0]).replace('-',' ').title()
-    message = "Photo by {} on Unsplash".format(ste)
-    color = 'rgb(255, 255, 255)' # black color
-    d = ImageDraw.Draw(cropped)
-    d.text((x, y), message, fill=color, font=font)
+    if name.find('unsplash') > 0:
+        ste = (re.findall(r'.+(?=[a-z])', re.findall(r'.+(?<=[0-9])', name)[0])[0]).replace('-',' ').title()
+        message = "Photo by {} on Unsplash".format(ste)
+        color = 'rgb(255, 255, 255)' # black color
+        d = ImageDraw.Draw(cropped)
+        d.text((x, y), message, fill=color, font=font)
 
 
 img = sys.argv[1]
