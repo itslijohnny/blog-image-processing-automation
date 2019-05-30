@@ -14,6 +14,7 @@ x_text = 38
 y_text = 682
 font = ImageFont.truetype('/Library/Fonts/Arial.ttf', 24)
 
+cwd = os.path.dirname(os.path.realpath(__file__))
 
 def img_process(img,size,x_text,y_text,font):
     name=str(os.path.basename(img)).rstrip()
@@ -23,7 +24,8 @@ def img_process(img,size,x_text,y_text,font):
     cropped.thumbnail(size, Image.ANTIALIAS)
     img_addtext(cropped,name,x_text,y_text,font)
     cropped.save('resizeimage.jpg', "JPEG")
-    keyFile = open('api.txt', 'r')
+    apiaddress = cwd+'/api.txt'
+    keyFile = open(apiaddress, 'r')
     consumer_key = keyFile.readline().rstrip()
     tinify.key = consumer_key
     source = tinify.from_file("resizeimage.jpg")
