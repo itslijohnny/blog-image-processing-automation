@@ -7,7 +7,7 @@ import os.path
 import re
 import pyperclip
 import json
-
+print('Drag and drop the image here.')
 
 size = 1600, 728
 x_text = 38
@@ -23,15 +23,14 @@ def img_process(img,size,x_text,y_text,font):
     cropped = img_crop(original,size)
     cropped.thumbnail(size, Image.ANTIALIAS)
     img_addtext(cropped,name,x_text,y_text,font)
-    cropped.save('resizeimage.jpg', "JPEG")
-    apiaddress = cwd+'/api.txt'
-    keyFile = open(apiaddress, 'r')
+    cropped.save('{}/resizeimage.jpg'.format(cwd), "JPEG")
+    keyFile = open('{}/api.txt'.format(cwd), 'r')
     consumer_key = keyFile.readline().rstrip()
     tinify.key = consumer_key
-    source = tinify.from_file("resizeimage.jpg")
-    source.to_file("optimized.jpg")
+    source = tinify.from_file("{}/resizeimage.jpg".format(cwd))
+    source.to_file("{}/optimized.jpg".format(cwd))
     print('Compressed by tinypng')
-    img2 = 'optimized.jpg'
+    img2 = '{}/optimized.jpg'.format(cwd)
     url = "https://sm.ms/api/upload"
     files = {'smfile': ("%s"%name , open(img2.replace("\n", ""), 'rb'), 'image/png')}
     sdata = {'ssl': 1}
