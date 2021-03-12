@@ -25,8 +25,7 @@ def get_img(id):
     """
     cwd = os.path.dirname(__file__)
     url = 'http://api.unsplash.com/photos/'+id
-    with open('{}/ca.txt'.format(cwd)) as f:
-        API_KEY = f.readline()
+    API_KEY = os.getenv('UNSPLASH_KEY') 
     params = dict(client_id=API_KEY)
     res = requests.get(url, params=params)
     img_url = res.json()['urls']['raw']
@@ -58,9 +57,7 @@ def img_process(id,width,height,x_text,y_text):
 
     img_addtext(cropped,name,x_text,y_text,font)
     cropped.save('{}/resizeimage.jpg'.format(cwd), "JPEG")
-    keyFile = open('{}/tiny.txt'.format(cwd), 'r')
-    consumer_key = keyFile.readline().rstrip()
-    tinify.key = consumer_key
+    tinify.key = os.getenv('TINY_KEY')
     source = tinify.from_file("{}/resizeimage.jpg".format(cwd))
     source.to_file("{}/{}.jpg".format(cwd,id))
     print('Compressed by tinypng')
@@ -101,11 +98,10 @@ def img_addtext(cropped,name,x_text,y_text,font):
     color = 'rgb(255, 255, 255)' # black color
     d = ImageDraw.Draw(cropped)
     d.text((x, y), message, fill=color, font=font)
-
+    return 1
 
 def upload(path):
-    with open('{}/smms.txt'.format(os.path.dirname(__file__))) as f:
-        API_KEY = f.readline()
+    API_KEY = os.getenv('SMMS_KEY')
     headers = {'Authorization': API_KEY}
     files = {'smfile': open(path, 'rb')}
     url = 'https://sm.ms/api/v2/upload'
