@@ -102,6 +102,11 @@ venv.bak/
 
 # mypy
 .mypy_cache/
-api.txt
 *.jpg
 test.py
+
+ca.txt
+smms.txt
+tiny.txt
+
+ltex.dictionary.en-US.txt
