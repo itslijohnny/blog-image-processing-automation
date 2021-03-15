@@ -50,3 +50,9 @@ async def BlogImageProcessor(id: str, width: int=1600, height: int=800, x_text: 
     else:
         return {"message": 'Missing id paramator in the request.'}
 ```
+
+In command line run:
+
+```shell
+uvicorn main:app --reload --env-file .env
+```
